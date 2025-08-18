@@ -1,4 +1,4 @@
-version: '1'
+version: '3.8'
 
 services:
   applio:
@@ -6,7 +6,17 @@ services:
       context: ./
       dockerfile: Dockerfile
     ports:
-      - "6969"
+      - "6969:6969"
+    shm_size: '8gb'  # Increase shared memory for PyTorch multiprocessing
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=0  # Explicitly set GPU device
+      - CUDA_VISIBLE_DEVICES=0
+    runtime: nvidia  # Use NVIDIA runtime
+    volumes:
+      - ./logs:/app/logs              # Training logs, model checkpoints, index files
+      - ./rvc/models:/app/rvc/models  # Pretrained and final models
+      - ./assets:/app/assets          # Weights, audios, and other assets
+      - ./datasets:/app/datasets      # Training datasets (optional)
     deploy:
       resources:
         reservations:
