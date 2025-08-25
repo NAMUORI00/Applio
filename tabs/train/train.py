@@ -298,6 +298,7 @@ def upload_to_google_drive(pth_path, index_path):
     upload_file(pth_path)
     upload_file(index_path)
 
+
 def auto_enable_checkpointing():
     try:
         return max_vram_gpu(0) < 6
@@ -601,7 +602,7 @@ def train_tab():
         with gr.Row():
             batch_size = gr.Slider(
                 1,
-                50,
+                64,
                 4,
                 step=1,
                 label=i18n("Batch Size"),
